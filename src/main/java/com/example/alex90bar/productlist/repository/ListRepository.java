@@ -16,6 +16,8 @@ public interface ListRepository extends JpaRepository<List, Long> {
 
   Optional<List> findListByName(String name);
 
+  Boolean existsByName(String name);
+
 }
 
 

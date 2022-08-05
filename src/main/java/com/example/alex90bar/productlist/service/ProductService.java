@@ -4,7 +4,9 @@ import com.example.alex90bar.productlist.api.mapper.ProductMapper;
 import com.example.alex90bar.productlist.api.request.ProductRq;
 import com.example.alex90bar.productlist.api.request.ProductToListRq;
 import com.example.alex90bar.productlist.api.response.ProductRs;
+import com.example.alex90bar.productlist.exception.ListAlreadyExistException;
 import com.example.alex90bar.productlist.exception.ListNotFoundException;
+import com.example.alex90bar.productlist.exception.ProductAlreadyExistException;
 import com.example.alex90bar.productlist.exception.ProductAlreadyInListException;
 import com.example.alex90bar.productlist.exception.ProductNotFoundException;
 import com.example.alex90bar.productlist.model.List;
@@ -35,6 +37,12 @@ public class ProductService {
   public void create(ProductRq productRq) {
     log.info("create begins " + productRq.toString());
 
+    //Проверяем, есть ли Product с таким именем в базе, если нет - создаем.
+    if (productRepository.existsByName(productRq.getName())){
+      throw new ProductAlreadyExistException("Product with name: " + productRq.getName()
+          + " = already exists. Please, correct the name");
+    }
+
     Product product = mapper.mapProductRqToProduct(productRq);
     productRepository.save(product);
 
@@ -51,7 +59,7 @@ public class ProductService {
         .orElseThrow(() -> new ProductNotFoundException("Product not found: " + productToListRq.getProductName()));
 
     //Проверяем, возможно Product уже и так в данном List
-    if (product.getList().getName().equals(productToListRq.getListName())){
+    if (product.getList() != null && product.getList().getName().equals(productToListRq.getListName())){
       throw new ProductAlreadyInListException("Product " + productToListRq.getProductName()
           + " already is in list " + productToListRq.getListName());
     }

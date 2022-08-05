@@ -17,7 +17,9 @@ import lombok.NoArgsConstructor;
 public class ListRs {
 
   private String name;
+  private Integer totalKcal;
   private List<ProductRs> products;
+
 
 }
 

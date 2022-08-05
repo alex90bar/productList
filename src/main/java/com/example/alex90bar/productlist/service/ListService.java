@@ -5,6 +5,7 @@ import com.example.alex90bar.productlist.api.mapper.ProductMapper;
 import com.example.alex90bar.productlist.api.request.ListRq;
 import com.example.alex90bar.productlist.api.response.ListRs;
 import com.example.alex90bar.productlist.api.response.ProductRs;
+import com.example.alex90bar.productlist.exception.ListAlreadyExistException;
 import com.example.alex90bar.productlist.model.List;
 import com.example.alex90bar.productlist.model.Product;
 import com.example.alex90bar.productlist.repository.ListRepository;
@@ -34,6 +35,12 @@ public class ListService {
 
   public void create(ListRq listRq) {
     log.info("create begins " + listRq.toString());
+
+    //Проверяем, есть ли List с таким именем в базе, если нет - создаем.
+    if (listRepository.existsByName(listRq.getName())){
+      throw new ListAlreadyExistException("List with name: " + listRq.getName()
+          + " = already exists. Please, correct the name");
+    }
 
     List list = mapper.mapListRqToList(listRq);
     listRepository.save(list);
