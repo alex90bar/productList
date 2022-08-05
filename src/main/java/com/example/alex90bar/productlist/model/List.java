@@ -1,5 +1,6 @@
 package com.example.alex90bar.productlist.model;
 
+import io.swagger.annotations.ApiModel;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -15,6 +16,7 @@ import lombok.Setter;
  *
  * @author alex90bar
  */
+
 
 @Getter
 @Setter
