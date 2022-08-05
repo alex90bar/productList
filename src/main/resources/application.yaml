@@ -29,6 +29,7 @@ spring:
   liquibase:
     change-log: classpath:db-productList-changelog.xml
     enabled: true
+    drop-first: true
 
 
 
