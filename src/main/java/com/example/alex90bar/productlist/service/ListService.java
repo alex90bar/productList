@@ -6,10 +6,9 @@ import com.example.alex90bar.productlist.api.request.ListRq;
 import com.example.alex90bar.productlist.api.response.ListRs;
 import com.example.alex90bar.productlist.api.response.ProductRs;
 import com.example.alex90bar.productlist.exception.ListAlreadyExistException;
-import com.example.alex90bar.productlist.model.List;
-import com.example.alex90bar.productlist.model.Product;
-import com.example.alex90bar.productlist.repository.ListRepository;
-import com.example.alex90bar.productlist.repository.ProductRepository;
+import com.example.alex90bar.productlist.model.ListEntity;
+import com.example.alex90bar.productlist.repository.ListEntityRepository;
+import com.example.alex90bar.productlist.repository.ProductEntityRepository;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 import lombok.AllArgsConstructor;
@@ -27,8 +26,8 @@ import org.springframework.stereotype.Service;
 @AllArgsConstructor
 public class ListService {
 
-  private final ListRepository listRepository;
-  private final ProductRepository productRepository;
+  private final ListEntityRepository listEntityRepository;
+  private final ProductEntityRepository productEntityRepository;
   private final ListMapper mapper;
   private final ProductMapper productMapper;
 
@@ -37,34 +36,35 @@ public class ListService {
     log.info("create begins " + listRq.toString());
 
     //Проверяем, есть ли List с таким именем в базе, если нет - создаем.
-    if (listRepository.existsByName(listRq.getName())){
+    if (listEntityRepository.existsByName(listRq.getName())){
       throw new ListAlreadyExistException("List with name: " + listRq.getName()
           + " = already exists. Please, correct the name");
     }
 
-    List list = mapper.mapListRqToList(listRq);
-    listRepository.save(list);
+    ListEntity listEntity = mapper.mapListRqToListEntity(listRq);
+    listEntityRepository.insert(listEntity);
 
     log.info("create ends");
   }
 
   public java.util.List<ListRs> getAllLists() {
     log.info("getAllLists begins");
+    java.util.List<ListEntity> listEntityList = listEntityRepository.findAll();
 
-    java.util.List<List> listList = listRepository.findAll();
     java.util.List<ListRs> listRsList = new ArrayList<>();
 
     //Находим список продуктов по list.id для каждого list и добавляем в response
-    for (List list : listList){
-      java.util.List<ProductRs> productRsList = productRepository.findAllByListId(list.getId())
-          .stream().map(productMapper::mapProductToProductRs).collect(Collectors.toList());
+    for (ListEntity listEntity : listEntityList){
+      java.util.List<ProductRs> productRsList = productEntityRepository.findAllByListId(listEntity.getId())
+          .stream().map(productMapper::mapProductEntityToProductRs).collect(Collectors.toList());
 
-      ListRs listRs = mapper.mapListToListRs(list, productRsList);
+      ListRs listRs = mapper.mapListEntityToListRs(listEntity, productRsList);
       listRsList.add(listRs);
     }
 
     log.info("getAllLists ends");
     return listRsList;
+
   }
 }
 

@@ -9,14 +9,16 @@ import com.example.alex90bar.productlist.api.request.ProductToListRq;
 import com.example.alex90bar.productlist.exception.ListNotFoundException;
 import com.example.alex90bar.productlist.exception.ProductAlreadyExistException;
 import com.example.alex90bar.productlist.exception.ProductAlreadyInListException;
-import com.example.alex90bar.productlist.model.List;
-import com.example.alex90bar.productlist.model.Product;
-import com.example.alex90bar.productlist.repository.ListRepository;
-import com.example.alex90bar.productlist.repository.ProductRepository;
+import com.example.alex90bar.productlist.model.ListEntity;
+import com.example.alex90bar.productlist.model.ProductEntity;
+import com.example.alex90bar.productlist.repository.ListEntityRepository;
+import com.example.alex90bar.productlist.repository.ProductEntityRepository;
+import org.junit.Ignore;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+
 
 @SpringBootTest
 class ProductServiceTest {
@@ -25,10 +27,10 @@ class ProductServiceTest {
   private ProductService productService;
 
   @MockBean
-  private ProductRepository productRepository;
+  private ProductEntityRepository productRepository;
 
   @MockBean
-  private ListRepository listRepository;
+  private ListEntityRepository listRepository;
 
   @Test
   public void notExistListTest(){
@@ -39,10 +41,10 @@ class ProductServiceTest {
 
   @Test
   public void productAlreadyInListTest(){
-    List list = new List();
+    ListEntity list = new ListEntity();
     list.setName("Spirits");
 
-    Product product = new Product();
+    ProductEntity product = new ProductEntity();
     product.setName("Jameson");
     product.setList(list);
 

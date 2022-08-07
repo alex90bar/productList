@@ -6,7 +6,6 @@ import com.example.alex90bar.productlist.api.response.ProductRs;
 import com.example.alex90bar.productlist.service.ProductService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import io.swagger.v3.oas.annotations.tags.Tag;
 import java.util.List;
 import javax.validation.Valid;
 import lombok.AllArgsConstructor;
