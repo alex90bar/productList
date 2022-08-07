@@ -8,4 +8,7 @@ spring:
     mongodb:
       uri: mongodb://localhost:27017/test
 
+mongock:
+  migration-scan-package:
+  - com.example.alex90bar.productlist.config
 

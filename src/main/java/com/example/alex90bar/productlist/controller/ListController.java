@@ -41,6 +41,7 @@ public class ListController {
     return new ResponseEntity<>("List created succesfully", HttpStatus.OK);
   }
 
+  @Transactional(readOnly = true)
   @ApiOperation("Получение всех существующих List, включая список всех Product по каждому List, и суммарное количество kcal по каждому List")
   @GetMapping
   public List<ListRs> getAllLists(){

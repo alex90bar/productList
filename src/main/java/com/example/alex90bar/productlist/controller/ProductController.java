@@ -11,6 +11,7 @@ import javax.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,7 +26,9 @@ import org.springframework.web.bind.annotation.RestController;
  * @author alex90bar
  */
 
+
 @Api(description = "Работа с Product, создание, получение и добавление в List")
+@Transactional
 @Validated
 @AllArgsConstructor
 @RestController
@@ -51,6 +54,7 @@ public class ProductController {
   }
 
   @ApiOperation("Получение всех существующих Product")
+  @Transactional(readOnly = true)
   @GetMapping
   public List<ProductRs> getAllProducts(){
     return productService.getAllProducts();
