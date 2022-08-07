@@ -1,8 +1,9 @@
 # ProductListApplication
 Описание проекта
 
-ProductListApplication - это учебный проект на Spring Boot. БД - PostgreSQL. <br> Взаимодействие приложения с БД через Spring Data JPA / Hibernate. 
-<br> Подключен `Liquibase` для удобства контроля версий БД.
+ProductListApplication - это учебный проект на Spring Boot. 
+<br> БД - `MongoDB`. Подключен `Mongock` для миграций и удобства контроля версий БД.
+<br> Версия проекта на БД `PostgreSQL`: https://github.com/alex90bar/productList
 <br> Маппинг сущностей выполняется через `MapStruct`.
 <br> Валидация на spring-boot-starter-validation.
 <br> В проекте также используется `Lombok` для упрощения процесса разработки и снижения количества кода.
@@ -11,7 +12,7 @@ ProductListApplication - это учебный проект на Spring Boot. Б
 Порт приложения: 8080.
 
 Приложение упаковано в докер-контейнер. 
-При запуске контейнера БД заполняется тестовыми данными (`src/main/resources/db/changelog/2022/08/data.sql`), можно выполнять запросы.
+При запуске контейнера БД заполняется тестовыми данными с помощью `Mongock`, можно выполнять запросы.
 
 Подключен `Swagger`, подробная документация по эндпоинтам:
 http://localhost:8080/swagger-ui/
@@ -21,8 +22,8 @@ http://localhost:8080/swagger-ui/
 Скрипты для запуска приложения и БД:
 ```
 docker network create my-network
-docker run --network=my-network --name postgres -e POSTGRES_DB=postgres -e POSTGRES_PASSWORD=postgres -e POSTGRES_USER=postgres -p 5435:5432 -d postgres
-docker run --network=my-network --rm -p 8080:8080 -e DATABASE_URL=postgresql://postgres:5432/postgres alex90bar/product-list:latest
+docker run --network=my-network -d -p 27017:27017 --name example-mongo mongo:latest
+docker run --network=my-network --rm -p 8080:8080 -e MONGODB_URI=example-mongo:27017/test alex90bar/product-list:mongo-db
 
 ```
 
