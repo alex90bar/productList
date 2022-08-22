@@ -1,7 +1,9 @@
 # ProductListApplication
 Описание проекта
 
-ProductListApplication - это учебный проект на Spring Boot. БД - PostgreSQL. <br> Взаимодействие приложения с БД через Spring Data JPA / Hibernate. 
+ProductListApplication - это учебный проект на Spring Boot. БД - PostgreSQL. 
+<br> Второй вариант - на БД MongoDB: https://github.com/alex90bar/productList/tree/mongoDB-dev
+<br> Взаимодействие приложения с БД через Spring Data JPA / Hibernate. 
 <br> Подключен `Liquibase` для удобства контроля версий БД.
 <br> Маппинг сущностей выполняется через `MapStruct`.
 <br> Валидация на spring-boot-starter-validation.
@@ -9,6 +11,7 @@ ProductListApplication - это учебный проект на Spring Boot. Б
 <br> Настройки приложения в файле `src/main/resources/application.yaml`.
 <br> Ключевые места бизнес-логики покрыты тестами.
 Порт приложения: 8080.
+
 
 Приложение упаковано в докер-контейнер. 
 При запуске контейнера БД заполняется тестовыми данными (`src/main/resources/db/changelog/2022/08/data.sql`), можно выполнять запросы.
