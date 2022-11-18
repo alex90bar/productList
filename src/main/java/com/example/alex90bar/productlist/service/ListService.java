@@ -39,7 +39,7 @@ public class ListService {
    * Метод для создания нового List
    * */
   public void create(ListRq listRq) {
-    log.info("create begins " + listRq.toString());
+    log.info("create begins {}", listRq.toString());
 
     //Проверяем, есть ли List с таким именем в базе, если нет - создаем.
     if (listRepository.existsByName(listRq.getName())){

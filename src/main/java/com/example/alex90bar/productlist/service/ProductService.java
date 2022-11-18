@@ -40,7 +40,7 @@ public class ProductService {
    * Метод для создания нового Product
    * */
   public void create(ProductRq productRq) {
-    log.info("create begins " + productRq.toString());
+    log.info("create begins {}", productRq.toString());
 
     //Проверяем, есть ли Product с таким именем в базе, если нет - создаем.
     if (productRepository.existsByName(productRq.getName())){
@@ -58,7 +58,7 @@ public class ProductService {
    * Метод для добавления Product в List
    * */
   public void putProductToList(ProductToListRq productToListRq) {
-    log.info("putProductToList begins " + productToListRq.toString());
+    log.info("putProductToList begins {}", productToListRq.toString());
 
     //Проверяем существование List и Product
     List list = listRepository.findListByName(productToListRq.getListName())
