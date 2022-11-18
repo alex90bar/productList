@@ -15,6 +15,7 @@ import java.util.stream.Collectors;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * ListService
@@ -24,6 +25,7 @@ import org.springframework.stereotype.Service;
 
 @Slf4j
 @Service
+@Transactional
 @AllArgsConstructor
 public class ListService {
 
@@ -33,6 +35,9 @@ public class ListService {
   private final ProductMapper productMapper;
 
 
+  /**
+   * Метод для создания нового List
+   * */
   public void create(ListRq listRq) {
     log.info("create begins " + listRq.toString());
 
@@ -48,6 +53,10 @@ public class ListService {
     log.info("create ends");
   }
 
+  /**
+   * Метод для получения всех List
+   * */
+  @Transactional(readOnly = true)
   public java.util.List<ListRs> getAllLists() {
     log.info("getAllLists begins");
 

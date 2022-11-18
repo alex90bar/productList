@@ -18,6 +18,7 @@ import java.util.stream.Collectors;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * ProductService
@@ -27,6 +28,7 @@ import org.springframework.stereotype.Service;
 
 @Slf4j
 @Service
+@Transactional
 @AllArgsConstructor
 public class ProductService {
 
@@ -34,6 +36,9 @@ public class ProductService {
   private final ListRepository listRepository;
   private final ProductMapper mapper;
 
+  /**
+   * Метод для создания нового Product
+   * */
   public void create(ProductRq productRq) {
     log.info("create begins " + productRq.toString());
 
@@ -49,6 +54,9 @@ public class ProductService {
     log.info("create ends");
   }
 
+  /**
+   * Метод для добавления Product в List
+   * */
   public void putProductToList(ProductToListRq productToListRq) {
     log.info("putProductToList begins " + productToListRq.toString());
 
@@ -71,6 +79,10 @@ public class ProductService {
     log.info("putProductToList ends");
   }
 
+  /**
+   * Метод для получения всех Product
+   * */
+  @Transactional(readOnly = true)
   public java.util.List<ProductRs> getAllProducts() {
     log.info("getAllProducts begins");
     java.util.List<Product> productList = productRepository.findAll();
